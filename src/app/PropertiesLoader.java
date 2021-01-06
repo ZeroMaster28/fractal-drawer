@@ -22,7 +22,7 @@ public class PropertiesLoader {
                 new InputStreamReader(url.openStream()))){
             String currentLine;
             while ((currentLine = in.readLine()) != null) {
-                if(currentLine.startsWith("#")) {
+                if(currentLine.startsWith("#") || !currentLine.contains("=")) {
                     continue;
                 }
                 String[] el = currentLine.split("=");
