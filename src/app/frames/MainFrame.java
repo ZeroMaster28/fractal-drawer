@@ -28,7 +28,7 @@ public class MainFrame extends JFrame {
                 Integer.parseInt(frameProperties.get(PROP_KEY_BOARD_Y)));
         board.setCoordinateX(Integer.parseInt(frameProperties.get(PROP_KEY_LOC_X)));
         board.setCoordinateY(Integer.parseInt(frameProperties.get(PROP_KEY_LOC_Y)));
-        board.fillCanvas(Color.BLACK);
+        board.fillCanvas();
 
         add(board);
         pack();
