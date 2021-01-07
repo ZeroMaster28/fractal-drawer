@@ -13,8 +13,6 @@ public class MainFrame extends JFrame {
 
     private static final String PROP_KEY_FRAME_X = "frame_size_x";
     private static final String PROP_KEY_FRAME_Y = "frame_size_y";
-    private static final String PROP_KEY_BOARD_X = "board_size_x";
-    private static final String PROP_KEY_BOARD_Y = "board_size_y";
     private static final String PROP_KEY_LOC_X = "location_x";
     private static final String PROP_KEY_LOC_Y = "location_y";
 
@@ -37,8 +35,7 @@ public class MainFrame extends JFrame {
         setJMenuBar(menuBar);
 
         // board for fractals drawing
-        Board board = new Board(Integer.parseInt(frameProperties.get(PROP_KEY_BOARD_X)),
-                Integer.parseInt(frameProperties.get(PROP_KEY_BOARD_Y)));
+        Board board = Board.getInstance();
         board.setCoordinateX(Integer.parseInt(frameProperties.get(PROP_KEY_LOC_X)));
         board.setCoordinateY(Integer.parseInt(frameProperties.get(PROP_KEY_LOC_Y)));
         board.fillCanvas();
