@@ -1,6 +1,7 @@
 package app.frames;
 
 import app.fractals.JuliaSet;
+import app.fractals.MandelbrotSet;
 
 import javax.swing.*;
 import java.awt.*;
@@ -54,6 +55,7 @@ public class SelectFractalFrame extends JFrame {
                 Board board = Board.getInstance();
                 switch(n) {
                     case 1: board.setFractal(new JuliaSet());
+                    case 2: board.setFractal(new MandelbrotSet());
                     default:
                 }
             }
