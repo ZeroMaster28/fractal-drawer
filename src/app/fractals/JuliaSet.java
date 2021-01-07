@@ -5,6 +5,10 @@ public class JuliaSet implements Fractal {
     private final int THRESHOLD = 200;
     private final ComplexNumber setParameter;
 
+    public JuliaSet() {
+        this(new ComplexNumber(-0.8, 0.156));
+    }
+
     public JuliaSet(ComplexNumber parameter) {
         this.setParameter = parameter;
     }
