@@ -46,7 +46,7 @@ public class SelectFractalFrame extends JFrame {
         Dimension d = fractalsToChoose.getPreferredSize();
         fractalsToChoose.setPreferredSize(new Dimension(100, d.height));
         fractalsToChoose.addItem("Julia Set");
-        fractalsToChoose.addItem("Mandelbrot");
+        fractalsToChoose.addItem("Mandelbrot Set");
         fractalsToChoose.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
