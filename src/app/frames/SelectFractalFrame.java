@@ -25,7 +25,7 @@ public class SelectFractalFrame extends JFrame {
 
     public SelectFractalFrame() {
         // frame main properties
-        super( "Select Fractal" );
+        super( "Settings" );
         setDefaultCloseOperation(this.HIDE_ON_CLOSE);
         setSize(500, 200);
         setLocation(50,50);

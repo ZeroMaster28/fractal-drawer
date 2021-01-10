@@ -26,7 +26,7 @@ public class MainFrame extends JFrame {
         // menu bar and its items
         JMenuBar menuBar = new JMenuBar();
         JMenu menu = new JMenu("Menu");
-        menu.add(new JMenuItem(new AbstractAction("Select Fractal") {
+        menu.add(new JMenuItem(new AbstractAction("Settings") {
             public void actionPerformed(ActionEvent e) {
                 new SelectFractalFrame().setVisible(true);
             }
