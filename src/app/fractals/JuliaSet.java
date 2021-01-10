@@ -2,7 +2,7 @@ package app.fractals;
 
 public class JuliaSet implements Fractal {
 
-    private final int THRESHOLD = 200;
+    private final int THRESHOLD = Fractal.APPROXIMATION_STEPS;
     private final ComplexNumber setParameter;
 
     public JuliaSet() {
@@ -19,7 +19,7 @@ public class JuliaSet implements Fractal {
         for(int i=0; i<THRESHOLD; i++) {
             c.square();
             c.add(setParameter);
-            if(c.getModulus() > 1000) {
+            if(c.getModulus() > Fractal.MAX_MODULUS) {
                 return i/(double) THRESHOLD;
             }
         }

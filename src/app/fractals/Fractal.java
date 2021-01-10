@@ -5,6 +5,12 @@ package app.fractals;
  */
 public interface Fractal {
 
+    /** Number of iterations during condition checking */
+    int APPROXIMATION_STEPS = 200;
+
+    /** Complex numbers with modulus value greater than this are considered as infinity */
+    int MAX_MODULUS = 1000;
+
     /**
      * Returns <code>boolean</code> indicating if given point belongs to the fractal.
      * @param c point to check
