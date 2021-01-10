@@ -28,6 +28,7 @@ public class Board extends JPanel {
     private Fractal fractal = new JuliaSet();
     private int coordinateX;
     private int coordinateY;
+    private double imageScale = 1.5;
 
     public static Board getInstance() {
         if(instance == null) {
@@ -55,6 +56,11 @@ public class Board extends JPanel {
         this.coordinateY = coordinateY;
     }
 
+    public void setImageScale(double imageScale) {
+        this.imageScale = imageScale;
+        fillCanvas();
+    }
+
     public Dimension getPreferredSize() {
         return new Dimension(canvas.getWidth(), canvas.getHeight());
     }
@@ -71,8 +77,8 @@ public class Board extends JPanel {
                 // transforming pixels to coordinates
                 int dimx = canvas.getWidth()/2;
                 int dimy = canvas.getWidth()/2;
-                double dx = 1.5*(x - dimx)/ (double) dimx;
-                double dy = 1.5*(dimy - y)/ (double) dimy;
+                double dx = imageScale*(x - dimx)/ (double) dimx;
+                double dy = imageScale*(dimy - y)/ (double) dimy;
                 ComplexNumber cn = new ComplexNumber(dx, dy);
                 // colorizing point if it belongs to the fractal or even how 'well' it belongs to it
                 Color color;

@@ -4,6 +4,8 @@ import app.fractals.JuliaSet;
 import app.fractals.MandelbrotSet;
 
 import javax.swing.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -15,6 +17,7 @@ public class SelectFractalFrame extends JFrame {
 
     /** Used texts */
     private static final String FRAME_NAME = "Settings";
+    private static final String TEXT_SCALE = "Image scale:";
     private static final String TEXT_FRACTAL = "Fractal:";
 
     private final JComboBox<String> fractalsToChoose = new JComboBox();
@@ -36,11 +39,33 @@ public class SelectFractalFrame extends JFrame {
         gbc.anchor = GridBagConstraints.CENTER;
         gbc.fill = GridBagConstraints.HORIZONTAL;
 
+        // Scale image
+        JLabel scaleInfo = new JLabel(TEXT_SCALE);
+        scaleInfo.setHorizontalAlignment(JTextField.CENTER);
+        gbc.gridy = 0; gbc.gridx = 20;
+        add(scaleInfo, gbc);
+
+        // Scale slider
+        JSlider scale = new JSlider(JSlider.HORIZONTAL, 0, 20, 2);
+        scale.addChangeListener(new ChangeListener(){
+            @Override
+            public void stateChanged(ChangeEvent changeEvent) {
+                JSlider slider = (JSlider) changeEvent.getSource();
+                Board.getInstance().setImageScale(slider.getValue());
+            }
+        });
+        scale.setMajorTickSpacing(10);
+        scale.setMinorTickSpacing(1);
+        scale.setPaintTicks(true);
+        scale.setPaintLabels(true);
+        gbc.gridy += 10;
+        add(scale, gbc);
+
         // Select fractal info
-        JLabel rotorIdentifier = new JLabel(TEXT_FRACTAL);
-        rotorIdentifier.setHorizontalAlignment(JTextField.CENTER);
-        gbc.gridy=0; gbc.gridx=20;
-        add(rotorIdentifier, gbc);
+        JLabel fractalName = new JLabel(TEXT_FRACTAL);
+        fractalName.setHorizontalAlignment(JTextField.CENTER);
+        gbc.gridy += 20;
+        add(fractalName, gbc);
 
         // Fractals options
         Dimension d = fractalsToChoose.getPreferredSize();
@@ -54,13 +79,13 @@ public class SelectFractalFrame extends JFrame {
                 int n = jcombobx.getSelectedIndex();
                 Board board = Board.getInstance();
                 switch(n) {
-                    case 1: board.setFractal(new JuliaSet());
-                    case 2: board.setFractal(new MandelbrotSet());
+                    case 0: board.setFractal(new JuliaSet()); break;
+                    case 1: board.setFractal(new MandelbrotSet()); break;
                     default:
                 }
             }
         });
-        gbc.gridx = 40;
+        gbc.gridy += 20;
         add(fractalsToChoose, gbc);
         /*JLabel label = new JLabel();
         label.setText("<html> The default fractal is <b>Julia Set</b>.</br> " +
