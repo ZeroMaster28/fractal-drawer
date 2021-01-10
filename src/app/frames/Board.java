@@ -4,11 +4,13 @@ import app.PropertiesLoader;
 import app.fractals.ComplexNumber;
 import app.fractals.Fractal;
 import app.fractals.JuliaSet;
+import app.threads.ForkDrawFractal;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.Map;
+import java.util.concurrent.ForkJoinPool;
 
 /** Singleton class representing board that is responsible for drawing fractals */
 public class Board extends JPanel {
@@ -72,6 +74,9 @@ public class Board extends JPanel {
     }
 
     public void fillCanvas() {
+        int rows = canvas.getWidth()-coordinateX, columns = canvas.getHeight()-coordinateY;
+        ComplexNumber[][] complexPlane = new ComplexNumber[rows][columns];
+        // creating complex plane for the input
         for (int x = coordinateX; x < canvas.getWidth(); x++) {
             for (int y = coordinateY; y < canvas.getHeight(); y++) {
                 // transforming pixels to coordinates
@@ -79,13 +84,20 @@ public class Board extends JPanel {
                 int dimy = canvas.getWidth()/2;
                 double dx = imageScale*(x - dimx)/ (double) dimx;
                 double dy = imageScale*(dimy - y)/ (double) dimy;
-                ComplexNumber cn = new ComplexNumber(dx, dy);
-                // colorizing point if it belongs to the fractal or even how 'well' it belongs to it
+                complexPlane[x][y] = new ComplexNumber(dx, dy);
+            }
+        }
+        double[][] resultImage = new double[rows][columns];
+        ForkJoinPool pool = new ForkJoinPool();
+        pool.invoke(new ForkDrawFractal(complexPlane, fractal, 7, resultImage));
+        // drawing results
+        for (int x = coordinateX; x < canvas.getWidth(); x++) {
+            for (int y = coordinateY; y < canvas.getHeight(); y++) {
                 Color color;
                 if(USE_WITH_ACCEPTANCE) {
-                    color = new Color((int) (255*(1-fractal.getPointAcceptanceRatio(cn))), 0, 0);
+                    color = new Color((int) (255*(1-resultImage[x-coordinateX][y-coordinateY])), 0, 0);
                 } else {
-                    color = fractal.hasPoint(cn)? Color.BLACK: Color.RED;
+                    color = resultImage[x-coordinateX][y-coordinateY] >= 0.99? Color.BLACK: Color.RED;
                 }
                 canvas.setRGB(x, y, color.getRGB());
             }
