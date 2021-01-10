@@ -26,11 +26,15 @@ public class Board extends JPanel {
      * to the given fractal set */
     private final boolean USE_WITH_ACCEPTANCE = true;
 
+    /** Image variables */
     private final BufferedImage canvas;
     private Fractal fractal = new JuliaSet();
     private int coordinateX;
     private int coordinateY;
     private double imageScale = 1.5;
+
+    /** Performance-like variables */
+    private int drawingProcNumber = 1;
 
     public static Board getInstance() {
         if(instance == null) {
@@ -63,6 +67,10 @@ public class Board extends JPanel {
         fillCanvas();
     }
 
+    public void setDrawingProcNumber(int drawingProcNumber) {
+        this.drawingProcNumber = drawingProcNumber;
+    }
+
     public Dimension getPreferredSize() {
         return new Dimension(canvas.getWidth(), canvas.getHeight());
     }
@@ -89,7 +97,7 @@ public class Board extends JPanel {
         }
         double[][] resultImage = new double[rows][columns];
         ForkJoinPool pool = new ForkJoinPool();
-        pool.invoke(new ForkDrawFractal(complexPlane, fractal, 7, resultImage));
+        pool.invoke(new ForkDrawFractal(complexPlane, fractal, drawingProcNumber, resultImage));
         // drawing results
         for (int x = coordinateX; x < canvas.getWidth(); x++) {
             for (int y = coordinateY; y < canvas.getHeight(); y++) {

@@ -19,6 +19,7 @@ public class SelectFractalFrame extends JFrame {
     private static final String FRAME_NAME = "Settings";
     private static final String TEXT_SCALE = "Image scale:";
     private static final String TEXT_FRACTAL = "Fractal:";
+    private static final String TEXT_PROCESS = "Processes number:";
 
     private final JComboBox<String> fractalsToChoose = new JComboBox();
 
@@ -60,6 +61,30 @@ public class SelectFractalFrame extends JFrame {
         scale.setPaintLabels(true);
         gbc.gridy += 10;
         add(scale, gbc);
+
+        // Select process number
+        JLabel procNumLabel = new JLabel(TEXT_PROCESS);
+        procNumLabel.setHorizontalAlignment(JTextField.CENTER);
+        gbc.gridy += 20;
+        add(procNumLabel, gbc);
+
+        // Processes number options
+        JComboBox<Integer> processesNumber = new JComboBox<>();
+        Dimension dim = processesNumber.getPreferredSize();
+        processesNumber.setPreferredSize(new Dimension(100, dim.height));
+        for(int i=1; i<11; i++) {
+             processesNumber.addItem(i);
+        }
+        processesNumber.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                JComboBox jcombobx = (JComboBox) actionEvent.getSource();
+                int n = jcombobx.getSelectedIndex();
+                Board.getInstance().setDrawingProcNumber(n+1);
+            }
+        });
+        gbc.gridy += 20;
+        add(processesNumber, gbc);
 
         // Select fractal info
         JLabel fractalName = new JLabel(TEXT_FRACTAL);
