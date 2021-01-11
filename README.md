@@ -7,9 +7,9 @@ For now there are only two fractals: Julia Set and Mandelbrot Set. Anyone can si
 fractals via creating class derived from `app.Fractal`.
 
 Main settings contain properties like:
-    - Image scalling
-    - Number of running threads
-    - Fractal selection
+- Image scalling
+- Number of running threads
+- Fractal selection
 
 Example below:
 
